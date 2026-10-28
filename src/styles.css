@@ -1,1 +1,309 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #0f1420;
+  --card: #ffffff;
+  --ink: #1c2333;
+  --muted: #667085;
+  --line: #e2e8f0;
+  --primary: #4f6ef7;
+  --primary-dark: #3b55d9;
+  --danger: #c0392b;
+  --ok: #1e9e5a;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgb(15 20 32 / 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background:
+    radial-gradient(900px 500px at 15% -10%, #2a3655 0%, transparent 60%),
+    radial-gradient(800px 500px at 90% 110%, #33406a 0%, transparent 55%),
+    var(--bg);
+  color: var(--ink);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  max-width: 640px;
+  margin: 32px auto;
+}
+
+.card-flat {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.home,
+.result {
+  text-align: center;
+}
+
+.lede {
+  color: var(--muted);
+  margin: 8px 0 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+button.primary,
+button.ghost {
+  min-height: 44px;
+  min-width: 96px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+button.primary {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 16px rgb(79 110 247 / 0.35);
+}
+
+button.primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+button.ghost {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+}
+
+button.ghost:hover {
+  background: #f4f6fb;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.stepper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 24px auto 8px;
+}
+
+.step {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.step.current {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+.step.passed {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.stage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.type-badge {
+  background: #eef2ff;
+  color: var(--primary-dark);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  margin: 14px 0 4px;
+  word-break: break-word;
+}
+
+.stage-attempts {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 18px 0 6px;
+}
+
+.image-option {
+  aspect-ratio: 1 / 1;
+  min-width: 44px;
+  font-size: clamp(26px, 7vw, 42px);
+  display: grid;
+  place-items: center;
+  background: #f8fafc;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.image-option:hover {
+  border-color: #b7c3f5;
+}
+
+.image-option.selected {
+  border-color: var(--primary);
+  background: #eef2ff;
+  transform: scale(0.96);
+}
+
+.image-option.reviewed {
+  cursor: default;
+}
+
+.input-row input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  font-size: 18px;
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  margin-top: 6px;
+}
+
+.input-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.error {
+  color: var(--danger);
+  font-weight: 600;
+  margin: 12px 0 0;
+  animation: shake 0.4s;
+}
+
+.review {
+  margin-top: 10px;
+}
+
+.review-badge {
+  color: var(--ok);
+  font-weight: 700;
+  margin: 4px 0;
+}
+
+.review-answer {
+  font-size: 20px;
+  margin: 8px 0;
+}
+
+.summary {
+  color: var(--muted);
+  margin: 6px 0 18px;
+}
+
+.results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.answer {
+  color: var(--muted);
+  margin: 6px 0;
+}
+
+.stage {
+  margin-top: 16px;
+  animation: stageIn 0.35s ease both;
+}
+
+@keyframes stageIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  80% {
+    transform: translateX(4px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-6px);
+  }
+  40%,
+  60% {
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    margin: 16px 12px;
+    padding: 18px;
+  }
+
+  .images {
+    gap: 8px;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
