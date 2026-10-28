@@ -1,1 +1,10 @@
-<main class="home"></main>
+<main class="home card">
+  <h1>Angul-It Captcha</h1>
+  <p class="lede">Prove you are human: complete every stage of the challenge.</p>
+  <div class="actions">
+    <button type="button" class="primary start-btn" (click)="start()">Start Challenge</button>
+    @if (hasActiveSession()) {
+      <button type="button" class="ghost resume-btn" (click)="resume()">Continue</button>
+    }
+  </div>
+</main>
