@@ -1,1 +1,110 @@
-<main class="captcha"></main>
+<main class="captcha">
+  @if (session(); as s) {
+    <nav class="stepper" aria-label="Challenge progress">
+      @for (c of s.challenges; track c.id) {
+        <span
+          class="step"
+          [class.current]="$index === s.currentIndex"
+          [class.passed]="c.status === 'passed'"
+          [class.upcoming]="$index > s.maxIndex"
+          >{{ $index + 1 }}</span
+        >
+      }
+    </nav>
+    @for (c of [challenge()]; track stageKey()) {
+      @if (c; as cc) {
+        <section class="stage card">
+          <header class="stage-head">
+            <h2>Stage {{ s.currentIndex + 1 }} of {{ s.challenges.length }}</h2>
+            <span class="type-badge">{{ typeOf(cc) }}</span>
+          </header>
+          <p class="question">{{ cc.question }}</p>
+          @if (cc.attempts > 0) {
+            <p class="stage-attempts">Attempts: {{ cc.attempts }}</p>
+          }
+          @if (cc.status === 'passed') {
+            <div class="review">
+              <p class="review-badge">Passed ✓</p>
+              @if (cc.type === 'image') {
+                <div class="images">
+                  @for (img of cc.images; track $index) {
+                    <div
+                      class="image-option reviewed"
+                      [class.selected]="selectedTiles(cc).includes($index)"
+                      >{{ img }}</div
+                    >
+                  }
+                </div>
+              } @else {
+                <p class="review-answer">{{ answerOf(cc) }}</p>
+              }
+            </div>
+            <div class="actions">
+              <button type="button" class="ghost" (click)="goBack()" [disabled]="!canGoBack()">
+                Back
+              </button>
+              <button
+                type="button"
+                class="primary"
+                (click)="continueForward()"
+                [disabled]="!canContinue()"
+              >
+                Continue
+              </button>
+            </div>
+          } @else {
+            <form [formGroup]="form()" novalidate>
+              @switch (cc.type) {
+                @case ('image') {
+                  <div class="images" role="group" aria-label="Image grid">
+                    @for (img of cc.images; track $index) {
+                      <button
+                        type="button"
+                        class="image-option"
+                        [class.selected]="tileControl($index).value"
+                        (click)="toggleTile($index)"
+                      >
+                        {{ img }}
+                      </button>
+                    }
+                  </div>
+                }
+                @case ('math') {
+                  <div class="input-row">
+                    <input
+                      formControlName="answer"
+                      type="text"
+                      inputmode="numeric"
+                      placeholder="Your answer"
+                      aria-label="Numeric answer"
+                    />
+                  </div>
+                }
+                @case ('text') {
+                  <div class="input-row">
+                    <input
+                      formControlName="answer"
+                      type="text"
+                      autocomplete="off"
+                      placeholder="Type the word"
+                      aria-label="Text answer"
+                    />
+                  </div>
+                }
+              }
+            </form>
+            @if (errorText(); as err) {
+              <p class="error" role="alert">{{ err }}</p>
+            }
+            <div class="actions">
+              <button type="button" class="ghost" (click)="goBack()" [disabled]="!canGoBack()">
+                Back
+              </button>
+              <button type="button" class="primary" (click)="submit()">Check</button>
+            </div>
+          }
+        </section>
+      }
+    }
+  }
+</main>
