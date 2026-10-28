@@ -1,1 +1,26 @@
-<main class="result"></main>
+<main class="result card">
+  @if (session(); as s) {
+    <h1>Challenge complete</h1>
+    <p class="summary">
+      {{ passedCount() }}/{{ s.challenges.length }} passed · {{ totalAttempts() }} attempts ·
+      {{ elapsedSeconds() }}s
+    </p>
+    <ul class="results-list">
+      @for (c of s.challenges; track c.id) {
+        <li class="result-item card-flat">
+          <header class="result-head">
+            <span class="type-badge">{{ typeOf(c.type) }}</span>
+            <span class="review-badge">Passed ✓</span>
+          </header>
+          <p class="question">{{ c.question }}</p>
+          <p class="answer">Your answer: {{ answerOf(c) }}</p>
+          <p class="stage-attempts">Attempts: {{ c.attempts }}</p>
+        </li>
+      }
+    </ul>
+    <div class="actions">
+      <button type="button" class="ghost" (click)="goHome()">Home</button>
+      <button type="button" class="primary" (click)="newChallenge()">New Challenge</button>
+    </div>
+  }
+</main>
